@@ -4,15 +4,23 @@
 
 <br />
 
+## Install
+
+```
+pip install extr-nlp
+```
+
+## Example
+
 ```python
 text = 'Ted is a Pitcher.'
 ```
 
-## 1. Entity Extraction
+### 1. Entity Extraction
 > Find Named Entities from text.
 
 ```python
-from extr import RegEx, RegExLabel, EntityExtactor
+from extr_nlp import RegEx, RegExLabel, EntityExtactor
 
 entity_extractor = EntityExtactor([
     RegExLabel('PERSON', [
@@ -31,12 +39,12 @@ entities = entity_extractor.get_entities(text)
 ## ]
 ```
 
-## 2. Relation Extraction
+### 2. Relation Extraction
 > Annotate and Extract Relationships between Entities
 
 ```python
-from extr import EntityAnnotator
-from extr import RegExRelationLabelBuilder, RelationExtractor
+from extr_nlp import EntityAnnotator
+from extr_nlp import RegExRelationLabelBuilder, RelationExtractor
 
 ## define relationship between PERSON and POSITION
 relationship = RegExRelationLabelBuilder('is_a') \
