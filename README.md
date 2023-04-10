@@ -2,9 +2,6 @@
 
 > Simple NER / Relation Extraction library using Regular Expressions
 
-<br />
-
-
 ### Entity Extraction
 
 ```python
