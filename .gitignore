@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # Private Local Files
-./notes.txt
+notes.txt
