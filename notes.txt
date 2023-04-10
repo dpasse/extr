@@ -1,0 +1,10 @@
+
+env\Scripts\activate.bat
+
+
+
+doc = ''
+
+Workspace(doc)
+    .label([])
+    .
