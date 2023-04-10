@@ -10,3 +10,7 @@ pylint:
 
 freeze:
 	pip freeze > requirements.txt
+
+build:
+	python setup.py sdist
+	python setup.py bdist_wheel
