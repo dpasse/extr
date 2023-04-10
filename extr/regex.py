@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, TypeVar
 
 import re
 from .iterutils import flatten
@@ -27,22 +27,20 @@ class RegExLabel:
 
         return flatten(map(handler, self._regexes))
 
-class RegExRelationLabel:
-    def __init__(self, label: str) -> None:
+# pylint: disable=C0103
+TRegExRelationLabelBuilder = TypeVar('TRegExRelationLabelBuilder', bound='RegExRelationLabelBuilder')
+# pylint: enable=C0103
+
+class RegExRelationLabelBuilder:
+    def __init__(self: TRegExRelationLabelBuilder, label: str) -> None:
         self._label = label
         self._expressions: List[RegEx] = []
 
     @property
-    def label(self) -> str:
+    def label(self: TRegExRelationLabelBuilder) -> str:
         return self._label
 
-    def create_regex_label(self) -> RegExLabel:
-        return RegExLabel(
-            self.label,
-            self._expressions
-        )
-
-    def add_e1_to_e2(self, e1: str, relation_expressions: List[str], e2: str) -> None:
+    def add_e1_to_e2(self: TRegExRelationLabelBuilder, e1: str, relation_expressions: List[str], e2: str) -> TRegExRelationLabelBuilder:
         self._expressions.append(
             RegEx(
                 list(
@@ -54,7 +52,9 @@ class RegExRelationLabel:
             )
         )
 
-    def add_e2_to_e1(self, e2: str, relation_expressions: List[str], e1: str) -> None:
+        return self
+
+    def add_e2_to_e1(self: TRegExRelationLabelBuilder, e2: str, relation_expressions: List[str], e1: str) -> TRegExRelationLabelBuilder:
         self._expressions.append(
             RegEx(
                 list(
@@ -65,3 +65,8 @@ class RegExRelationLabel:
                 )
             )
         )
+
+        return self
+
+    def build(self: TRegExRelationLabelBuilder) -> RegExLabel:
+        return RegExLabel(self.label, self._expressions)

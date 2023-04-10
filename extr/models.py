@@ -1,7 +1,9 @@
-from typing import List
+from typing import List, Dict, Any
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
+
+NOT_DEFINED_FLAG: int = -1
 
 @dataclass()
 class Entity:
@@ -9,7 +11,9 @@ class Entity:
     text: str
     start: int
     end: int
-    identifer: int = 0
+    identifer: int = NOT_DEFINED_FLAG
+    token_id: int = NOT_DEFINED_FLAG
+    attributes: Dict[str, Any] = field(default_factory=dict)
 
     def __repr__(self) -> str:
         return f'<Entity label="{self.label}" text="{self.text}" span=({self.start}, {self.end})>'

@@ -9,16 +9,6 @@ class EntityExtractor:
     def __init__(self, regex_labels: List[RegExLabel]) -> None:
         self._regex_labels = regex_labels
 
-    def annotate(self, text: str) -> EntityAnnotationResults:
-        entities = self.get_entities(text)
-
-        annotated_text = text[:]
-        for identifer, entity in enumerate(entities):
-            entity.identifer = identifer + 1
-            annotated_text = annotated_text[:entity.start] + str(entity) + annotated_text[entity.end:]
-
-        return EntityAnnotationResults(text, annotated_text, entities)
-
     def get_entities(self, text: str) -> List[Entity]:
         def handler(regex_label: RegExLabel):
             return (
@@ -44,4 +34,13 @@ class EntityExtractor:
             labels.append(curr_label)
 
         return labels
-        
+
+class EntityAnnotator:
+    def annotate(self, text: str, entities: List[Entity]) -> EntityAnnotationResults:
+        annotated_text = text[:]
+        for identifer, entity in enumerate(entities):
+            entity.identifer = identifer + 1
+            annotated_text = annotated_text[:entity.start] + str(entity) + annotated_text[entity.end:]
+
+        return EntityAnnotationResults(text, annotated_text, entities)
+    

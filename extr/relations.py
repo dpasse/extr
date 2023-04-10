@@ -1,14 +1,14 @@
 from typing import List, Generator
 
 import re
-from .regex import RegExRelationLabel
+from .regex import RegExLabel
 from .entities import EntityAnnotationResults
 from .iterutils import flatten
 from .models import Relation
 
 
 class RelationExtractor:
-    def __init__(self, relation_labels: List[RegExRelationLabel]) -> None:
+    def __init__(self, relation_labels: List[RegExLabel]) -> None:
         self._relation_labels = relation_labels
 
     def extract(self, entity_annotation_results: EntityAnnotationResults) -> List[Relation]:
@@ -25,10 +25,10 @@ class RelationExtractor:
                 entity_lookup[e2_key]
             )
 
-        def handler(relationship_label: RegExRelationLabel) -> Generator[Relation, None, None]:
+        def handler(relationship_label: RegExLabel) -> Generator[Relation, None, None]:
             return (
                 create_relation(label, match)
-                for label, match in relationship_label.create_regex_label().findall(entity_annotation_results.annotated_text)
+                for label, match in relationship_label.findall(entity_annotation_results.annotated_text)
             )
 
         return flatten(map(handler, self._relation_labels))

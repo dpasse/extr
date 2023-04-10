@@ -3,7 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.join('..'))
 
-from extr import Entity, EntityAnnotationResults, RegExRelationLabel, RelationExtractor
+from extr import Entity, EntityAnnotationResults, RegExRelationLabelBuilder, RelationExtractor
 
 
 def test_get_relations():
@@ -16,14 +16,21 @@ def test_get_relations():
         ]
     )
 
-    relationship = RegExRelationLabel('is_a')
-    relationship.add_e1_to_e2(
-        'PERSON',
-        [r'\s+is\s+a\s+'],
-        'POSITION'
-    )
+    ## define relationship between PERSON and POSITION    
+    relationship = RegExRelationLabelBuilder('is_a') \
+        .add_e1_to_e2(
+            'PERSON', ## e1
+            [
+                ## define how the relationship exists in nature
+                r'\s+is\s+a\s+',
+            ],
+            'POSITION' ## e2
+        ) \
+        .build()
+        
+    relations_to_extract = [relationship]
 
-    relations = RelationExtractor([relationship]).extract(annotations)
+    relations = RelationExtractor(relations_to_extract).extract(annotations)
     
     assert len(relations) == 1
     assert relations[0].e1.text == 'Ted'

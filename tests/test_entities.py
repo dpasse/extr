@@ -4,11 +4,11 @@ import re
 
 sys.path.insert(0, os.path.join('..'))
 
-from extr import RegEx, RegExLabel, EntityExtractor
+from extr import RegEx, RegExLabel, EntityExtractor, Entity, EntityAnnotator
 
 
 def test_get_entities():
-    annotator = EntityExtractor([
+    extractor = EntityExtractor([
         RegExLabel('PERSON', [
             RegEx([r'ted'], re.IGNORECASE)
         ]),
@@ -17,7 +17,17 @@ def test_get_entities():
         ]),
     ])
 
-    annotations = annotator.annotate('Ted is a Pitcher.')
+    entities = extractor.get_entities('Ted is a Pitcher.')
 
-    assert len(annotations.entities) == 2
+    assert len(entities) == 2
+
+def test_annotate():
+    entities = [
+        Entity('POSITION', 'Pitcher', 9, 16, 1),
+        Entity('PERSON', 'Ted', 0, 3, 2)
+    ]
+
+    annotations = EntityAnnotator().annotate('Ted is a Pitcher.', entities)
+
+    assert annotations.original_text == 'Ted is a Pitcher.'
     assert annotations.annotated_text == '##ENTITY_PERSON_2## is a ##ENTITY_POSITION_1##.'

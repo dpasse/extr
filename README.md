@@ -1,8 +1,15 @@
 # Extr - NLP
 
-> Simple NER / Relation Extraction library using Regular Expressions
+> Named Entity Recognition (NER) and Relation Extraction (RE) library using Regular Expressions
 
-### Entity Extraction
+<br />
+
+```python
+text = 'Ted is a Pitcher.'
+```
+
+## 1. Entity Extraction
+> Find Named Entities from text.
 
 ```python
 from extr import RegEx, RegExLabel, EntityExtactor
@@ -16,29 +23,38 @@ entity_extractor = EntityExtactor([
     ]),
 ])
 
-annotation_results = entity_extractor.annotate('Ted is a Pitcher.')
+entities = entity_extractor.get_entities(text)
 
-## annotation_results.entities == [
+## entities == [
 ##      <Entity label="POSITION" text="Pitcher" span=(9, 16)>,
 ##      <Entity label="PERSON" text="Ted" span=(0, 3)>
 ## ]
 ```
 
-### Relation Extraction
+## 2. Relation Extraction
+> Annotate and Extract Relationships between Entities
 
 ```python
-from extr import RegExRelationLabel, RelationExtractor
-
-relation = RegExRelationLabel('is_a')
+from extr import EntityAnnotator
+from extr import RegExRelationLabelBuilder, RelationExtractor
 
 ## define relationship between PERSON and POSITION
-relation.add_e1_to_e2(
-    'PERSON', ## e1
-    [r'\s+is\s+a\s+'], ## relationship between e1 / e2
-    'POSITION' ## e2
-)
+relationship = RegExRelationLabelBuilder('is_a') \
+    .add_e1_to_e2(
+        'PERSON', ## e1
+        [
+            ## define how the relationship exists in nature
+            r'\s+is\s+a\s+',
+        ],
+        'POSITION' ## e2
+    ) \
+    .build()
 
-relations = RelationExtractor([relation]).extract(annotation_results)
+relations_to_extract = [relationship]
+
+## `entities` see 'Entity Extraction' above
+annotation_results = EntityAnnotator().annotate(text, entities)
+relations = RelationExtractor(relations_to_extract).extract(annotation_results)
 
 ## relations == [
 ##      <Relation e1="Ted" r="is_a" e2="Pitcher">
