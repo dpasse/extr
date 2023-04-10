@@ -6,7 +6,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setuptools.setup(
     name='extr-nlp',
-    version='0.0.1',
+    version='0.0.2',
     description='',
     packages=setuptools.find_packages('src'),
     package_dir={'': 'src'},
