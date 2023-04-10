@@ -27,7 +27,7 @@ annotation_results = entity_extractor.annotate('Ted is a Pitcher.')
 ### Relation Extraction
 
 ```python
-from extr import RegEx, RegExLabel, EntityExtactor
+from extr import RegExRelationLabel, RelationExtractor
 
 relation = RegExRelationLabel('is_a')
 
