@@ -4,7 +4,7 @@ import re
 
 sys.path.insert(0, os.path.join('../src'))
 
-from extr_nlp import RegEx, RegExLabel, EntityExtractor, Entity, EntityAnnotator
+from extr import RegEx, RegExLabel, EntityExtractor, Entity, EntityAnnotator
 
 
 def test_get_entities():

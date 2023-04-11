@@ -7,7 +7,7 @@
 ## Install
 
 ```
-pip install extr-nlp
+pip install extr
 ```
 
 ## Example
@@ -20,7 +20,7 @@ text = 'Ted is a Pitcher.'
 > Find Named Entities from text.
 
 ```python
-from extr_nlp import RegEx, RegExLabel, EntityExtactor
+from extr import RegEx, RegExLabel, EntityExtactor
 
 entity_extractor = EntityExtactor([
     RegExLabel('PERSON', [
@@ -43,8 +43,8 @@ entities = entity_extractor.get_entities(text)
 > Annotate and Extract Relationships between Entities
 
 ```python
-from extr_nlp import EntityAnnotator
-from extr_nlp import RegExRelationLabelBuilder, RelationExtractor
+from extr import EntityAnnotator
+from extr import RegExRelationLabelBuilder, RelationExtractor
 
 ## define relationship between PERSON and POSITION
 relationship = RegExRelationLabelBuilder('is_a') \
