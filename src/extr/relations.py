@@ -1,4 +1,4 @@
-from typing import List, Generator
+from typing import List, Generator, cast
 
 import re
 from .regex import RegExLabel
@@ -31,4 +31,4 @@ class RelationExtractor:
                 for label, match in relationship_label.findall(entity_annotation_results.annotated_text)
             )
 
-        return flatten(map(handler, self._relation_labels))
+        return cast(List[Relation], flatten(map(handler, self._relation_labels)))

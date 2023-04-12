@@ -4,7 +4,7 @@ import re
 
 sys.path.insert(0, os.path.join('../src'))
 
-from extr import RegEx, RegExLabel, EntityExtractor, Entity, EntityAnnotator
+from extr import RegEx, RegExLabel, EntityExtractor, Entity, EntityAnnotator, Location
 
 
 def test_get_entities():
@@ -23,8 +23,8 @@ def test_get_entities():
 
 def test_annotate():
     entities = [
-        Entity('POSITION', 'Pitcher', 9, 16, 1),
-        Entity('PERSON', 'Ted', 0, 3, 2)
+        Entity('POSITION', 'Pitcher', Location(9, 16), 1),
+        Entity('PERSON', 'Ted', Location(0, 3), 2)
     ]
 
     annotations = EntityAnnotator().annotate('Ted is a Pitcher.', entities)

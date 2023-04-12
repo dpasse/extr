@@ -1,8 +1,8 @@
-from typing import List
+from typing import List, cast
 
 from .regex import RegExLabel
 from .iterutils import flatten
-from .models import Entity, EntityAnnotationResults
+from .models import Entity, EntityAnnotationResults, Location
 
 
 class EntityExtractor:
@@ -12,23 +12,25 @@ class EntityExtractor:
     def get_entities(self, text: str) -> List[Entity]:
         def handler(regex_label: RegExLabel):
             return (
-                Entity(label, match.group(), *match.span())
+                Entity(label, match.group(), Location(*match.span()))
                 for label, match in regex_label.findall(text)
             )
 
-        found_labels = sorted(
-            flatten(map(handler, self._regex_labels)),
+        ## sort descending
+        all_found_labels = sorted(
+            cast(List[Entity], flatten(map(handler, self._regex_labels))),
             key=lambda entity: (entity.end, -entity.start),
             reverse=True
         )
 
-        if len(found_labels) == 0:
+        if len(all_found_labels) == 0:
             return []
 
-        labels = found_labels[:1]
-        for curr_label in found_labels[1:]:
+        labels = all_found_labels[:1]
+        for curr_label in all_found_labels[1:]:
             prev_label = labels[-1]
-            if curr_label.start >= prev_label.start or curr_label.end > prev_label.start:
+
+            if curr_label.location.is_in(prev_label.location):
                 continue
 
             labels.append(curr_label)
@@ -43,4 +45,3 @@ class EntityAnnotator:
             annotated_text = annotated_text[:entity.start] + str(entity) + annotated_text[entity.end:]
 
         return EntityAnnotationResults(text, annotated_text, entities)
-    
