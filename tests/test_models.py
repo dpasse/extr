@@ -51,6 +51,6 @@ def test_location_is_in_returns_true_when_end_is_in_other():
 
 def test_location_is_in_returns_false_when_neither_is_in_other():
     location1 = Location(3, 12)
-    location2 = Location(1, 2)
+    location2 = Location(1, 3)
 
     assert not location2.is_in(location1)

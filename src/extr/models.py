@@ -14,15 +14,23 @@ class Location:
     start: int
     end: int
 
+    @property
+    def actual_end(self) -> int:
+        return self.end - 1
+
     def is_in(self: TLocation, other: TLocation) -> bool:
-        return self.start >= other.start and self.start <= other.end \
-            or self.end >= other.start and self.end <= other.end
+        return self.start >= other.start and self.start <= other.actual_end \
+            or self.actual_end >= other.start and self.actual_end <= other.actual_end
 
     def contains(self: TLocation, other: TLocation) -> bool:
-        return other.start >= self.start and other.end <= self.end
+        return other.start >= self.start and other.actual_end <= self.actual_end
 
     def __repr__(self) -> str:
         return f'({self.start}, {self.end})'
+
+# pylint: disable=C0103
+TEntity = TypeVar('TEntity', bound='Entity')
+# pylint: enable=C0103
 
 @dataclass()
 class Entity:
@@ -30,7 +38,6 @@ class Entity:
     text: str
     location: Location
     identifer: int = NOT_DEFINED_FLAG
-    token_id: int = NOT_DEFINED_FLAG
     attributes: Dict[str, Any] = field(default_factory=dict)
 
     @property
@@ -40,6 +47,12 @@ class Entity:
     @property
     def end(self) -> int:
         return self.location.end
+
+    def is_in(self: TEntity, other: TEntity) -> bool:
+            return self.location.is_in(other.location)
+
+    def contains(self: TEntity, other: TEntity) -> bool:
+        return self.location.contains(other.location)
 
     def __repr__(self) -> str:
         return f'<Entity label="{self.label}" text="{self.text}" span={repr(self.location)}>'

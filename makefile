@@ -14,3 +14,8 @@ freeze:
 build:
 	python setup.py sdist
 	python setup.py bdist_wheel
+
+clean-build-win:
+	rmdir /S .\build
+	rmdir /S .\dist
+	rmdir /S .\src\extr.egg-info

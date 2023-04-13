@@ -2,7 +2,7 @@ from typing import List, cast
 
 from .regex import RegExLabel
 from .iterutils import flatten
-from .models import Entity, EntityAnnotationResults, Location
+from .models import Location, Entity, EntityAnnotationResults
 
 
 class EntityExtractor:
@@ -17,31 +17,34 @@ class EntityExtractor:
             )
 
         ## sort descending
-        all_found_labels = sorted(
+        all_found_entities = sorted(
             cast(List[Entity], flatten(map(handler, self._regex_labels))),
             key=lambda entity: (entity.end, -entity.start),
             reverse=True
         )
 
-        if len(all_found_labels) == 0:
+        if len(all_found_entities) == 0:
             return []
 
-        labels = all_found_labels[:1]
-        for curr_label in all_found_labels[1:]:
-            prev_label = labels[-1]
+        entities = all_found_entities[:1]
+        for curr_entity in all_found_entities[1:]:
+            prev_entity = entities[-1]
 
-            if curr_label.location.is_in(prev_label.location):
+            if curr_entity.is_in(prev_entity):
                 continue
 
-            labels.append(curr_label)
+            entities.append(curr_entity)
 
-        return labels
+        return entities
 
 class EntityAnnotator:
     def annotate(self, text: str, entities: List[Entity]) -> EntityAnnotationResults:
+        def insert_entity(text: str, entity: Entity) -> str:
+            return text[:entity.start] + str(entity) + text[entity.end:]
+
         annotated_text = text[:]
         for identifer, entity in enumerate(entities):
             entity.identifer = identifer + 1
-            annotated_text = annotated_text[:entity.start] + str(entity) + annotated_text[entity.end:]
+            annotated_text = insert_entity(annotated_text, entity)
 
         return EntityAnnotationResults(text, annotated_text, entities)
