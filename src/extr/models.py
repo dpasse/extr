@@ -29,11 +29,20 @@ class Location:
         return f'({self.start}, {self.end})'
 
 # pylint: disable=C0103
-TEntity = TypeVar('TEntity', bound='Entity')
+TILocation = TypeVar('TILocation', bound='ILocation')
 # pylint: enable=C0103
 
+class ILocation:
+    location: Location
+
+    def is_in(self: TILocation, other: TILocation) -> bool:
+        return self.location.is_in(other.location)
+
+    def contains(self: TILocation, other: TILocation) -> bool:
+        return self.location.contains(other.location)
+
 @dataclass()
-class Entity:
+class Entity(ILocation):
     label: str
     text: str
     location: Location
@@ -47,12 +56,6 @@ class Entity:
     @property
     def end(self) -> int:
         return self.location.end
-
-    def is_in(self: TEntity, other: TEntity) -> bool:
-            return self.location.is_in(other.location)
-
-    def contains(self: TEntity, other: TEntity) -> bool:
-        return self.location.contains(other.location)
 
     def __repr__(self) -> str:
         return f'<Entity label="{self.label}" text="{self.text}" span={repr(self.location)}>'

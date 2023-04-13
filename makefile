@@ -19,3 +19,6 @@ clean-build-win:
 	rmdir /S .\build
 	rmdir /S .\dist
 	rmdir /S .\src\extr.egg-info
+
+upload:
+	twine upload dist/*
