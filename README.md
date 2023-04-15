@@ -1,5 +1,4 @@
-# Extr - NLP
-
+# Extr
 > Named Entity Recognition (NER) and Relation Extraction (RE) library using Regular Expressions
 
 <br />
@@ -20,9 +19,9 @@ text = 'Ted is a Pitcher.'
 > Find Named Entities from text.
 
 ```python
-from extr import RegEx, RegExLabel, EntityExtactor
+from extr import RegEx, RegExLabel, EntityExtractor
 
-entity_extractor = EntityExtactor([
+entity_extractor = EntityExtractor([
     RegExLabel('PERSON', [
         RegEx([r'ted'], re.IGNORECASE)
     ]),
