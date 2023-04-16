@@ -44,7 +44,7 @@ class EntityAnnotator:
 
         annotated_text = text[:]
         for identifer, entity in enumerate(entities):
-            entity.identifer = identifer + 1
+            entity.identifier = identifer + 1
             annotated_text = insert_entity(annotated_text, entity)
 
         return EntityAnnotationResults(text, annotated_text, entities)

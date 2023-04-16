@@ -46,7 +46,7 @@ class Entity(ILocation):
     label: str
     text: str
     location: Location
-    identifer: int = NOT_DEFINED_FLAG
+    identifier: int = NOT_DEFINED_FLAG
     attributes: Dict[str, Any] = field(default_factory=dict)
 
     @property
@@ -61,7 +61,7 @@ class Entity(ILocation):
         return f'<Entity label="{self.label}" text="{self.text}" span={repr(self.location)}>'
 
     def __str__(self) -> str:
-        return f'##ENTITY_{self.label}_{self.identifer}##'
+        return f'##ENTITY_{self.label}_{self.identifier}##'
 
 @dataclass(frozen=True)
 class EntityAnnotationResults:
