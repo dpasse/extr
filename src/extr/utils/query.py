@@ -11,12 +11,15 @@ class Query(Generic[T]):
     def __init__(self: TQuery, sequence: List[T]):
         self._sequence = deepcopy(sequence)
 
+    def __filter(self: TQuery, filter_method: Callable[[T], bool]) -> List[T]:
+        return list(filter(filter_method, self._sequence))
+
     def filter(self: TQuery, filter_method: Callable[[T], bool]) -> TQuery:
-        self._sequence = list(filter(filter_method, self._sequence))
+        self._sequence = self.__filter(filter_method)
         return self
 
     def find(self: TQuery, find_method: Callable[[T], bool]) -> Optional[T]:
-        observations = list(filter(find_method, self._sequence))
+        observations = self.__filter(find_method)
 
         size = len(observations)
         if size > 1:
