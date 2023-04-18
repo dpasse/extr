@@ -79,8 +79,16 @@ class Relation:
     e1: Entity
     e2: Entity
 
+    @property
+    def key(self) -> str:
+        return self.create_key(self.e1, self.e2)
+
     def __repr__(self) -> str:
         return f'<Relation e1="{self.e1.text}" r="{self.label}" e2="{self.e2.text}">'
+
+    @staticmethod
+    def create_key(e1: Entity, e2: Entity) -> str:
+        return f'{e1.identifier}_{e2.identifier}'
 
 @dataclass(frozen=True)
 class Token(ILocation):

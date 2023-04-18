@@ -4,9 +4,11 @@ from ..models import Entity, EntityAnnotationResults
 
 
 class EntityAnnotator:
-    def annotate(self, text: str, entities: List[Entity]) -> EntityAnnotationResults:
+    def annotate(self, text: str, entities: List[Entity], offset = 0) -> EntityAnnotationResults:
         def insert_entity(text: str, entity: Entity) -> str:
-            return text[:entity.start] + str(entity) + text[entity.end:]
+            start = entity.start - offset
+            end = entity.end - offset
+            return text[:start] + str(entity) + text[end:]
 
         annotated_text = text[:]
         for identifer, entity in enumerate(entities):

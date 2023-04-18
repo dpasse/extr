@@ -1,7 +1,7 @@
 from typing import List, cast
 
 from ..regexes import RegExLabel
-from ..iterutils import flatten
+from ..utils import flatten
 from ..models import Location, Entity
 
 

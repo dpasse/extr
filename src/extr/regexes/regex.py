@@ -1,7 +1,7 @@
 from typing import List, Tuple
 import re
 
-from ..iterutils import flatten
+from ..utils.iterutils import flatten
 
 
 class RegEx:

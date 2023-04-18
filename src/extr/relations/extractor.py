@@ -3,7 +3,7 @@ from typing import List, Generator, cast
 import re
 from ..regexes import RegExLabel
 from ..models import EntityAnnotationResults, Relation
-from ..iterutils import flatten
+from ..utils import flatten
 
 
 class RelationExtractor:
