@@ -1,4 +1,4 @@
-from typing import List, TypeVar, Generic, Callable, Optional
+from typing import Dict, List, TypeVar, Generic, Callable, Optional
 from copy import deepcopy
 
 T = TypeVar('T')
@@ -29,3 +29,10 @@ class Query(Generic[T]):
 
     def tolist(self: TQuery) -> List[T]:
         return self._sequence
+
+    def todict(self: TQuery, key_method: Callable[[T], str]) -> Dict[str, T]:
+        mapping: Dict[str, T] = {}
+        for item in self._sequence:
+            mapping[key_method(item)] = item
+
+        return mapping
