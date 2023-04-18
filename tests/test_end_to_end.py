@@ -5,9 +5,9 @@ import pytest
 
 sys.path.insert(0, os.path.join('../src'))
 
-from extr import EntityAnnotator, RelationExtractor, EntityExtractor
-from extr import RegExRelationLabelBuilder
-from extr import RegEx, RegExLabel, EntityAnnotator
+from extr import RegEx, RegExLabel
+from extr.entities import EntityExtractor, EntityAnnotator
+from extr.relations import RelationExtractor, RegExRelationLabelBuilder
 
 
 @pytest.mark.skip()

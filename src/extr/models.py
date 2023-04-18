@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, TypeVar
+from typing import Any, Dict, List, TypeVar
 
 from dataclasses import dataclass, field
 
@@ -81,3 +81,28 @@ class Relation:
 
     def __repr__(self) -> str:
         return f'<Relation e1="{self.e1.text}" r="{self.label}" e2="{self.e2.text}">'
+
+@dataclass(frozen=True)
+class Token(ILocation):
+    text: str
+    location: Location
+    order: int
+    entities: List[Entity] = field(default_factory=lambda: [])
+
+    def add_entity(self, entity: Entity):
+        self.entities.append(entity)
+
+    def __len__(self) -> int:
+        return len(self.entities)
+
+    def __str__(self) -> str:
+        return self.text
+
+    def __repr__(self) -> str:
+        return f'<Token text="{self.text}", location={repr(self.location)}, order={self.order}>'
+
+@dataclass(frozen=True)
+class TokenGroup(ILocation):
+    location: Location
+    sentence: str
+    tokens: List[Token]

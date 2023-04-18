@@ -19,7 +19,8 @@ text = 'Ted is a Pitcher.'
 > Find Named Entities from text.
 
 ```python
-from extr import RegEx, RegExLabel, EntityExtractor
+from extr import RegEx, RegExLabel
+from extr.entities import EntityExtractor
 
 entity_extractor = EntityExtractor([
     RegExLabel('PERSON', [
@@ -42,8 +43,9 @@ entities = entity_extractor.get_entities(text)
 > Annotate and Extract Relationships between Entities
 
 ```python
-from extr import EntityAnnotator
-from extr import RegExRelationLabelBuilder, RelationExtractor
+from extr.entities import EntityAnnotator
+from extr.relations import RelationExtractor, \
+                           RegExRelationLabelBuilder
 
 ## define relationship between PERSON and POSITION
 relationship = RegExRelationLabelBuilder('is_a') \

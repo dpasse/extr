@@ -1,4 +1,4 @@
-from .regex import RegExRelationLabelBuilder, RegExLabel, RegEx
+from .regexes import RegExLabel, RegEx
+from .models import Entity, Relation, ILocation, Location, EntityAnnotationResults, Token, TokenGroup
 from .entities import EntityExtractor, EntityAnnotator
-from .relations import RelationExtractor
-from .models import Entity, EntityAnnotationResults, Relation, ILocation, Location
+from .relations import RelationExtractor, RegExRelationLabelBuilder

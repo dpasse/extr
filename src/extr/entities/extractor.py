@@ -1,8 +1,8 @@
 from typing import List, cast
 
-from .regex import RegExLabel
-from .iterutils import flatten
-from .models import Location, Entity, EntityAnnotationResults
+from ..regexes import RegExLabel
+from ..iterutils import flatten
+from ..models import Location, Entity
 
 
 class EntityExtractor:
@@ -36,15 +36,3 @@ class EntityExtractor:
             entities.append(curr_entity)
 
         return entities
-
-class EntityAnnotator:
-    def annotate(self, text: str, entities: List[Entity]) -> EntityAnnotationResults:
-        def insert_entity(text: str, entity: Entity) -> str:
-            return text[:entity.start] + str(entity) + text[entity.end:]
-
-        annotated_text = text[:]
-        for identifer, entity in enumerate(entities):
-            entity.identifier = identifer + 1
-            annotated_text = insert_entity(annotated_text, entity)
-
-        return EntityAnnotationResults(text, annotated_text, entities)

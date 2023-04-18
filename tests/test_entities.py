@@ -4,8 +4,8 @@ import re
 
 sys.path.insert(0, os.path.join('../src'))
 
-from extr import RegEx, RegExLabel, EntityExtractor, Entity, EntityAnnotator, Location
-
+from extr import RegEx, RegExLabel, Entity, Location
+from extr.entities import EntityExtractor, EntityAnnotator
 
 def test_get_entities():
     extractor = EntityExtractor([

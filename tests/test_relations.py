@@ -3,7 +3,8 @@ import sys
 
 sys.path.insert(0, os.path.join('../src'))
 
-from extr import Location, Entity, EntityAnnotationResults, RegExRelationLabelBuilder, RelationExtractor
+from extr import Location, Entity, EntityAnnotationResults
+from extr.relations import RelationExtractor, RegExRelationLabelBuilder
 
 
 def test_get_relations():
