@@ -63,12 +63,7 @@ html = HtmlEntityAnnotator().annotate(text, entities)
         }
     </style>
     <div>
-        <span class="entity lb-PERSON">
-            <span class="label">PERSON</span>Ted
-        </span> is a 
-        <span class="entity lb-POSITION">
-            <span class="label">POSITION</span>Pitcher
-        </span>.
+        {{ -- insert html here -- }}
     </div>
 ```
 
