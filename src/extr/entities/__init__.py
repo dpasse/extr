@@ -1,2 +1,2 @@
 from .extractor import EntityExtractor
-from .annotator import EntityAnnotator
+from .annotator import EntityAnnotator, HtmlEntityAnnotator
