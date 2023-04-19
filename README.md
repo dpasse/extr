@@ -39,7 +39,42 @@ entities = entity_extractor.get_entities(text)
 ## ]
 ```
 
-### 2. Relation Extraction
+### 2. Visualize Entities in HTML
+> Annotate text to display in HTML.
+
+```html
+<link rel="stylesheet" href="https://github.com/dpasse/extr/blob/main/docs/styles.css">
+```
+
+```python
+from extr.entities import HtmlEntityAnnotator
+
+html = HtmlEntityAnnotator().annotate(text, entities)
+```
+
+```html
+    <style>
+        .lb-PERSON {
+            background-color: orange;
+        }
+
+        .lb-POSITION {
+            background-color: yellow;
+        }
+    </style>
+    <div>
+        <span class="entity lb-PERSON">
+            <span class="label">PERSON</span>Ted
+        </span> is a 
+        <span class="entity lb-POSITION">
+            <span class="label">POSITION</span>Pitcher
+        </span>.
+    </div>
+```
+
+![](https://github.com/dpasse/extr/blob/main/docs/images/annotations.JPG)
+
+### 3. Relation Extraction
 > Annotate and Extract Relationships between Entities
 
 ```python
