@@ -42,10 +42,6 @@ entities = entity_extractor.get_entities(text)
 ### 2. Visualize Entities in HTML
 > Annotate text to display in HTML.
 
-```html
-<link rel="stylesheet" href="https://github.com/dpasse/extr/blob/main/docs/styles.css">
-```
-
 ```python
 from extr.entities import HtmlEntityAnnotator
 
@@ -53,6 +49,12 @@ html = HtmlEntityAnnotator().annotate(text, entities)
 ```
 
 ```html
+    <!-- basic style sheet -->
+    <link
+        rel="stylesheet"
+        href="https://github.com/dpasse/extr/blob/main/docs/styles.css">
+    
+    <!-- customize colors by label -->
     <style>
         .lb-PERSON {
             background-color: orange;
@@ -62,6 +64,7 @@ html = HtmlEntityAnnotator().annotate(text, entities)
             background-color: yellow;
         }
     </style>
+    
     <div>
         {{ -- insert html here -- }}
     </div>
