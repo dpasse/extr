@@ -49,13 +49,23 @@ html = HtmlEntityAnnotator().annotate(text, entities)
 ```
 
 ```html
-<!-- basic style sheet -->
-<link
-    rel="stylesheet"
-    href="https://github.com/dpasse/extr/blob/main/docs/styles.css">
-
 <!-- customize colors by label -->
 <style>
+    span.entity {
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 5px;
+        margin: 3px;
+        color: gray;
+        cursor: pointer;
+    }
+
+    span.label {
+        font-weight: bold;
+        padding: 3px;
+        color: black;
+    }
+
     .lb-PERSON {
         background-color: orange;
     }
