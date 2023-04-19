@@ -15,7 +15,7 @@ def test_end_to_end():
     text = 'Walk; Mountcastle to 3B; Odor to 2B'
 
     entity_extractor = EntityExtractor([
-        RegExLabel('PERSON', [
+        RegExLabel('PLAYER', [
             RegEx([
                 r'\b([A-Z]\w+)(?=\s+to\b)'
             ])
@@ -40,7 +40,7 @@ def test_end_to_end():
 
     player_to_base_relationship = RegExRelationLabelBuilder('is_on') \
         .add_e1_to_e2(
-            'PERSON', ## e1
+            'PLAYER', ## e1
             [
                 ## define how the relationship exists in nature
                 r'\s+to\s+',
