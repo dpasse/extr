@@ -49,25 +49,25 @@ html = HtmlEntityAnnotator().annotate(text, entities)
 ```
 
 ```html
-    <!-- basic style sheet -->
-    <link
-        rel="stylesheet"
-        href="https://github.com/dpasse/extr/blob/main/docs/styles.css">
-    
-    <!-- customize colors by label -->
-    <style>
-        .lb-PERSON {
-            background-color: orange;
-        }
+<!-- basic style sheet -->
+<link
+    rel="stylesheet"
+    href="https://github.com/dpasse/extr/blob/main/docs/styles.css">
 
-        .lb-POSITION {
-            background-color: yellow;
-        }
-    </style>
-    
-    <div>
-        {{ -- insert html here -- }}
-    </div>
+<!-- customize colors by label -->
+<style>
+    .lb-PERSON {
+        background-color: orange;
+    }
+
+    .lb-POSITION {
+        background-color: yellow;
+    }
+</style>
+
+<div>
+    {{ -- insert html here -- }}
+</div>
 ```
 
 ![](https://github.com/dpasse/extr/blob/main/docs/images/annotations.JPG)
