@@ -1,2 +1,4 @@
 from .extractor import EntityExtractor
-from .annotator import EntityAnnotator, HtmlEntityAnnotator
+from .annotator import EntityAnnotator, \
+                       HtmlEntityAnnotator, \
+                       LabelOnlyEntityAnnotator

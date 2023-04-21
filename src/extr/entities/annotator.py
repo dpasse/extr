@@ -22,6 +22,10 @@ class EntityAnnotator:
 
         return EntityAnnotationResults(text, annotated_text, entities)
 
+class LabelOnlyEntityAnnotator(EntityAnnotator):
+    def display_entity(self, entity: Entity) -> str:
+        return f'<{entity.label}>{entity.text}</{entity.label}>'
+
 class HtmlEntityAnnotator(EntityAnnotator):
     def display_entity(self, entity: Entity) -> str:
         key = re.sub(r' ', '-', entity.label)
