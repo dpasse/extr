@@ -1,17 +1,30 @@
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 import re
 
 from ..utils.iterutils import flatten
 
 
 class RegEx:
-    def __init__(self, expressions: List[str], flags: int = 0) -> None:
+    def __init__(self, expressions: List[str], flags: int = 0, skip_if: Optional[List[str]] = None) -> None:
         self._expressions = expressions
         self._flags = flags
+        self._skip_if = set([] if skip_if is None else skip_if)
 
     def findall(self, text: str) -> List[re.Match]:
         def handler(expression: str) -> list:
-            return list(re.finditer(expression, text, self._flags))
+            observations = []
+            for match in re.finditer(expression, text, self._flags):
+
+                should_skip_match = False
+                for skip_if in self._skip_if:
+                    if re.search(skip_if, match.group()):
+                        should_skip_match = True
+                        break
+
+                if not should_skip_match:
+                    observations.append(match)
+
+            return observations
 
         return flatten(map(handler, self._expressions))
 
