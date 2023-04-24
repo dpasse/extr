@@ -4,7 +4,7 @@ import re
 
 sys.path.insert(0, os.path.join('../src'))
 
-from extr import RegEx
+from extr.regexes import RegEx, SlimRegEx
 
 
 def test_findall():
@@ -27,7 +27,7 @@ def test_findall_with_skip_ifs():
             r'.+',
         ],
         skip_if=[
-            r'is\s+a'
+            SlimRegEx([r'is\s+a'])
         ],
     )
 

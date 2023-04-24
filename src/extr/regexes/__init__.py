@@ -1,1 +1,1 @@
-from .regex import RegEx, RegExLabel
+from .regex import SlimRegEx, RegEx, RegExLabel

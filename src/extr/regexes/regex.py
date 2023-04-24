@@ -4,10 +4,29 @@ import re
 from ..utils.iterutils import flatten
 
 
-class RegEx:
-    def __init__(self, expressions: List[str], flags: int = 0, skip_if: Optional[List[str]] = None) -> None:
+class SlimRegEx:
+    def __init__(self, expressions: List[str], flags: int = 0) -> None:
         self._expressions = expressions
         self._flags = flags
+
+    def findall(self, text: str) -> List[re.Match]:
+        def handler(expression: str) -> list:
+            return list(re.finditer(expression, text, self._flags))
+
+        return flatten(map(handler, self._expressions))
+
+    def search(self, text: str) -> Optional[re.Match]:
+        for expression in self._expressions:
+            match = re.search(expression, text)
+            if match:
+                return match
+
+        return None
+
+class RegEx(SlimRegEx):
+    def __init__(self, expressions: List[str], flags: int = 0, skip_if: Optional[List[SlimRegEx]] = None) -> None:
+        super().__init__(expressions, flags)
+
         self._skip_if = set([] if skip_if is None else skip_if)
 
     def findall(self, text: str) -> List[re.Match]:
@@ -17,7 +36,7 @@ class RegEx:
 
                 should_skip_match = False
                 for skip_if in self._skip_if:
-                    if re.search(skip_if, match.group()):
+                    if skip_if.search(match.group()):
                         should_skip_match = True
                         break
 
