@@ -58,3 +58,16 @@ class RegExLabel:
             return list(zip([self._label] * len(observations), observations))
 
         return flatten(map(handler, self._regexes))
+
+def transform_knowledge(label: str, knowledge: List[str]) -> RegExLabel:
+    expressions = [
+        r'(?<=^|\b)' + term + r'(?=\b|$)'
+        for term in knowledge
+    ]
+
+    return RegExLabel(
+        label,
+        [
+            RegEx(expressions)
+        ]
+    )

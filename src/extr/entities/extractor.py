@@ -1,13 +1,19 @@
-from typing import List, cast
+from typing import Dict, List, Optional, cast
 
-from ..regexes import RegExLabel
+from ..regexes import RegExLabel, transform_knowledge
 from ..utils import flatten
 from ..models import Location, Entity
 
 
 class EntityExtractor:
-    def __init__(self, regex_labels: List[RegExLabel]) -> None:
+    def __init__(self, regex_labels: List[RegExLabel], kb: Optional[Dict[str, List[str]]] = None) -> None:
         self._regex_labels = regex_labels
+
+        if kb:
+            for label, expressions in kb.items():
+                self._regex_labels.append(
+                    transform_knowledge(label, expressions)
+                )
 
     def get_entities(self, text: str) -> List[Entity]:
         def handler(regex_label: RegExLabel):

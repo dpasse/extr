@@ -21,6 +21,26 @@ def test_get_entities():
 
     assert len(entities) == 2
 
+def test_get_entities_with_knowledge():
+    kb = {
+        'PERSON': [
+            'Ted'
+        ]
+    }
+
+    extractor = EntityExtractor(
+        [
+            RegExLabel('POSITION', [
+                RegEx([r'pitcher'], re.IGNORECASE)
+            ]),
+        ],
+        kb
+    )
+
+    entities = extractor.get_entities('Ted is a Pitcher.')
+
+    assert len(entities) == 2
+
 def test_annotate():
     entities = [
         Entity('POSITION', 'Pitcher', Location(9, 16), 1),

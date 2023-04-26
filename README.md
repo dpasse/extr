@@ -39,6 +39,31 @@ entities = entity_extractor.get_entities(text)
 ## ]
 ```
 
+**<i> or add a knowledge base</i>**
+
+```python
+from extr import RegEx, RegExLabel
+from extr.entities import EntityExtractor
+
+entity_extractor = EntityExtractor(
+    [
+        RegExLabel('POSITION', [
+            RegEx([r'pitcher'], re.IGNORECASE)
+        ]),
+    ],
+    kb={
+        'PERSON': ['Ted']
+    }
+)
+
+entities = entity_extractor.get_entities(text)
+
+## entities == [
+##      <Entity label="POSITION" text="Pitcher" span=(9, 16)>,
+##      <Entity label="PERSON" text="Ted" span=(0, 3)>
+## ]
+```
+
 ### 2. Visualize Entities in HTML
 > Annotate text to display in HTML.
 
