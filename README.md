@@ -43,9 +43,9 @@ entities = entity_extractor.get_entities(text)
 
 ```python
 from extr import RegEx, RegExLabel
-from extr.entities import EntityExtractor
+from extr.entities import create_entity_extractor
 
-entity_extractor = EntityExtractor(
+entity_extractor = create_entity_extractor(
     [
         RegExLabel('POSITION', [
             RegEx([r'pitcher'], re.IGNORECASE)
