@@ -61,7 +61,7 @@ class RegExLabel:
 
 def transform_knowledge(label: str, knowledge: List[str]) -> RegExLabel:
     expressions = [
-        r'(?<=^|\W)' + term + r'(?=\W|$)'
+        r'(?<!\w)' + term + r'(?!\w)'
         for term in knowledge
     ]
 
