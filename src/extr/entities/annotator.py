@@ -35,4 +35,4 @@ class HtmlEntityAnnotator(EntityAnnotator):
             '</span>'
 
     def annotate(self, text: str, entities: List[Entity], offset = 0) -> EntityAnnotationResults:
-        return super().annotate(html.escape(text), entities, offset)
+        return super().annotate(text, entities, offset)
