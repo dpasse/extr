@@ -43,7 +43,7 @@ def test_apply_attribute_to_entity():
         ]
     )
 
-    entities = attributor.set(text, entities)
+    entities = attributor.set_attributes(text, entities)
 
     assert 'NEGATIVE' in entities[0].attributes['ctypes']
     assert not 'ctypes' in entities[1].attributes
