@@ -25,15 +25,18 @@ def test_get_entities():
     extractor = create_entity_extractor(regex_labels)
     entities = extractor.get_entities(text)
 
-    attributor = EntityAttributor(settings = [
-        AttributeToApply(
-            'IGNORE',
-            entity_label='POSITION',
-            setups=[
-                AttributeSetup(before=r'(is\s+a\s+)')
-            ]
-        )
-    ])
+    attributor = EntityAttributor(
+        'types',
+        settings = [
+            AttributeToApply(
+                'IGNORE',
+                entity_label='POSITION',
+                setups=[
+                    AttributeSetup(before=r'(is\s+a\s+)')
+                ]
+            )
+        ]
+    )
 
     entities = attributor.set(text, entities)
 

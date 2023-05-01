@@ -20,7 +20,8 @@ class AttributeToApply:
     setups: List[AttributeSetup]
 
 class EntityAttributor:
-    def __init__(self, settings: List[AttributeToApply]) -> None:
+    def __init__(self, attribute_name: str, settings: List[AttributeToApply]) -> None:
+        self._attribute_name = attribute_name
         self._settings = settings
 
     def set(self, text: str, entities: List[Entity]) -> List[Entity]:
@@ -41,7 +42,7 @@ class EntityAttributor:
 
                     if key:
                         mappings[key].add_attribute(
-                            'types',
+                            self._attribute_name,
                             setting.name
                         )
 
