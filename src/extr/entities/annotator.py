@@ -1,4 +1,4 @@
-from typing import List, Optional, Set
+from typing import List
 import re
 
 from ..models import Entity, EntityAnnotationResults
