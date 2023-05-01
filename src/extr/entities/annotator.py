@@ -8,11 +8,7 @@ class EntityAnnotator:
     def display_entity(self, entity: Entity) -> str:
         return str(entity)
 
-    def annotate(self, \
-                 text: str, \
-                 entities: List[Entity], \
-                 offset = 0, \
-                 skip_when_type_attribute_is: Optional[List[str]] = None) -> EntityAnnotationResults:
+    def annotate(self, text: str, entities: List[Entity], offset = 0) -> EntityAnnotationResults:
         def insert_entity(text: str, entity: Entity) -> str:
             start = entity.start - offset
             end = entity.end - offset
@@ -21,19 +17,6 @@ class EntityAnnotator:
         annotated_text = text[:]
         for identifer, entity in enumerate(entities):
             entity.identifier = identifer + 1
-
-            if skip_when_type_attribute_is:
-                type_attributes: Set[str] = entity.attributes['types'] if 'types' in entity.attributes else set()
-
-                skip = False
-                for attribute_to_skip in skip_when_type_attribute_is:
-                    if attribute_to_skip in type_attributes:
-                        skip = True
-                        break
-
-                if skip:
-                    continue
-
             annotated_text = insert_entity(annotated_text, entity)
 
         return EntityAnnotationResults(text, annotated_text, entities)
