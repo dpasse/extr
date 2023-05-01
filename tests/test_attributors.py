@@ -35,7 +35,7 @@ def test_apply_attribute_to_entity():
                     AttributeApplications(
                         entities=['POSITION'],
                         setups=[
-                            AttributeSetup(before=r' is not a ')
+                            AttributeSetup(before=r' not a ')
                         ]
                     )
                 ]
