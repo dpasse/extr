@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, TypeVar
+from typing import Set, Dict, List, TypeVar
 
 from dataclasses import dataclass, field
 
@@ -47,7 +47,7 @@ class Entity(ILocation):
     text: str
     location: Location
     identifier: int = NOT_DEFINED_FLAG
-    attributes: Dict[str, Any] = field(default_factory=dict)
+    attributes: Dict[str, Set[str]] = field(default_factory=dict)
 
     @property
     def start(self) -> int:
@@ -56,6 +56,12 @@ class Entity(ILocation):
     @property
     def end(self) -> int:
         return self.location.end
+
+    def add_attribute(self, label: str, attribute: str) -> None:
+        if not label in self.attributes:
+            self.attributes[label] = set()
+
+        self.attributes[label].add(attribute)
 
     def __repr__(self) -> str:
         return f'<Entity label="{self.label}" text="{self.text}" span={repr(self.location)}>'
