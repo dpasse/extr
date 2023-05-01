@@ -8,10 +8,11 @@ from extr import RegEx, RegExLabel
 from extr.entities import create_entity_extractor, \
                           EntityAttributor, \
                           AttributeToApply, \
+                          AttributeApplications, \
                           AttributeSetup
 
 
-def test_get_entities():
+def test_apply_attribute_to_entity():
     regex_labels = [
         RegExLabel('PERSON', [
             RegEx([r'ted'], re.IGNORECASE)
@@ -21,18 +22,22 @@ def test_get_entities():
         ]),
     ]
 
-    text = 'Ted is a Pitcher.'
+    text = 'Ted is not a Pitcher.'
     extractor = create_entity_extractor(regex_labels)
     entities = extractor.get_entities(text)
 
     attributor = EntityAttributor(
-        'types',
+        attribute_name='ctypes',
         settings = [
             AttributeToApply(
-                'IGNORE',
-                entity_label='POSITION',
-                setups=[
-                    AttributeSetup(before=r'(is\s+a\s+)')
+                'NEGATIVE',
+                applications=[
+                    AttributeApplications(
+                        entities=['POSITION'],
+                        setups=[
+                            AttributeSetup(before=r' is not a ')
+                        ]
+                    )
                 ]
             )
         ]
@@ -40,5 +45,5 @@ def test_get_entities():
 
     entities = attributor.set(text, entities)
 
-    assert 'IGNORE' in entities[0].attributes['types']
-    assert not 'types' in entities[1].attributes
+    assert 'NEGATIVE' in entities[0].attributes['ctypes']
+    assert not 'ctypes' in entities[1].attributes

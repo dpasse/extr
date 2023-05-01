@@ -13,11 +13,26 @@ class AttributeSetup:
     after: Optional[str] = None
 
 @dataclass
+class AttributeApplications:
+    entities: List[str]
+    setups: List[AttributeSetup]
+
+    def get_expression(self):
+        expressions = []
+        for setup in self.setups:
+            expression = setup.before if setup.before else ''
+            expression += r'(##ENTITY_(?:' + '|'.join(self.entities) + r')_\d+##)'
+            if setup.after:
+                expression += setup.after
+
+            expressions.append(expression)
+
+        return SlimRegEx(expressions)
+
+@dataclass
 class AttributeToApply:
     name: str
-    entity_label: str
-
-    setups: List[AttributeSetup]
+    applications: List[AttributeApplications]
 
 class EntityAttributor:
     def __init__(self, attribute_name: str, settings: List[AttributeToApply]) -> None:
@@ -29,13 +44,8 @@ class EntityAttributor:
 
         mappings = Query(entities).todict(str)
         for setting in self._settings:
-            for attribute_setup in setting.setups:
-                expression = attribute_setup.before if attribute_setup.before else ''
-                expression += r'(##ENTITY_' + setting.entity_label + r'_\d+##)'
-                if attribute_setup.after:
-                    expression += attribute_setup.after
-
-                for match in SlimRegEx([expression]).findall(annotated_text):
+            for application in setting.applications:
+                for match in application.get_expression().findall(annotated_text):
                     groups = list(match.groups())
                     key = Query(groups) \
                         .find(lambda g: g.startswith('##ENTITY_'))
