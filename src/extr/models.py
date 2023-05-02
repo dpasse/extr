@@ -89,6 +89,13 @@ class Relation:
     def key(self) -> str:
         return self.create_key(self.e1, self.e2)
 
+    @property
+    def definition(self) -> str:
+        return f'r("{self.e1.label}", "{self.e2.label}")'
+
+    def __str__(self) -> str:
+        return f'r("{self.e1.text}", "{self.e2.text}") == "{self.label}"'
+
     def __repr__(self) -> str:
         return f'<Relation e1="{self.e1.text}" r="{self.label}" e2="{self.e2.text}">'
 
