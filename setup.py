@@ -6,8 +6,8 @@ with open('README.md', encoding='utf-8') as f:
 
 setuptools.setup(
     name='extr',
-    version='0.0.22',
-    keywords='',
+    version='0.0.23',
+    keywords=['Named Entity Recognition', 'Relation Extraction', 'NER', 'RE', 'NLP'],
     description='Named Entity Recognition (NER) and Relation Extraction (RE) library using Regular Expressions',
     packages=setuptools.find_packages('src'),
     package_dir={'': 'src'},
