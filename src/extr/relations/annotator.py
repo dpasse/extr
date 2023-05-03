@@ -30,7 +30,7 @@ class RelationAnnotator:
             self.display_entity(e1, 1) + \
             annotated_text[e1_end:]
 
-class HtmlRelationAnnotator:
+class HtmlRelationAnnotator(RelationAnnotator):
     def display_entity(self, entity: Entity, position: int) -> str:
         key = re.sub(r' ', '-', entity.label)
         return f'<span class="entity lb-{key} e{position}">' + \
