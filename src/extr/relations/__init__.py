@@ -1,3 +1,3 @@
 from .extractor import RelationExtractor
-from .annotator import RelationAnnotator, HtmlRelationAnnotator
+from .annotator import RelationAnnotator, RelationAnnotatorWithEntityType, HtmlRelationAnnotator
 from .label_builder import RegExRelationLabelBuilder, RelationLabelBuilderConfig
