@@ -68,29 +68,12 @@ entities = entity_extractor.get_entities(text)
 > Annotate text to display in HTML.
 
 ```python
-from extr.entities import HtmlEntityAnnotator
+from extr.entities.viewers import HtmlViewer
 
-html = HtmlEntityAnnotator().annotate(text, entities)
-```
+viewer = HtmlViewer()
+viewer.append(text, entities)
 
-```html
-<!-- customize colors by label -->
-<style>
-    span.entity {
-        border: 1px solid black;
-        border-radius: 5px;
-        padding: 5px;
-        margin: 3px;
-        color: gray;
-        cursor: pointer;
-    }
-
-    span.label {
-        font-weight: bold;
-        padding: 3px;
-        color: black;
-    }
-
+html = viewer.create_view(custom_styles="""
     .lb-PERSON {
         background-color: orange;
     }
@@ -98,11 +81,7 @@ html = HtmlEntityAnnotator().annotate(text, entities)
     .lb-POSITION {
         background-color: yellow;
     }
-</style>
-
-<div>
-    {{ -- insert html here -- }}
-</div>
+""")
 ```
 
 ![](https://github.com/dpasse/extr/blob/main/docs/images/annotations.JPG)
