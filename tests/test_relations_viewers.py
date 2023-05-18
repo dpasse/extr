@@ -58,7 +58,7 @@ td.label { font-weight: bold; text-align: center; }
     </head>
     <body>
         <table>
-<tr><td class="header" colspan=3>r("PERSON", "POSITION")</td></tr>
+<tr><td class="header" colspan="3">r("PERSON", "POSITION")</td></tr>
 <tr id="0"><td>0</td><td class="label">is_a</td><td><span class="entity lb-PERSON e1"><span class="label">PERSON</span>Ted</span> is a <span class="entity lb-POSITION e2"><span class="label">POSITION</span>Pitcher</span>.</td></tr>
         </table>
     </body>

@@ -26,15 +26,17 @@ td.header { font-weight: bold; }
 td.label { font-weight: bold; text-align: center; }
 """
 
-    def __init__(self) -> None:
+    def __init__(self, show_index=True) -> None:
         self._relation_index = 0
+        self._show_index = show_index
         self._rows: List[str] = []
         self._annotator = HtmlRelationAnnotator()
 
     def append_header(self, header: str) -> None:
+        colspan = 3 if self._show_index else 2
         self._rows.append(
             '<tr>' + \
-                f'<td class="header" colspan=3>{header}</td>' + \
+                f'<td class="header" colspan="{colspan}">{header}</td>' + \
             '</tr>'
         )
 
@@ -43,7 +45,7 @@ td.label { font-weight: bold; text-align: center; }
         annotation = self._annotator.annotate(text, relation)
         self._rows.append(
             f'<tr id="{index}">' + \
-                f'<td>{index}</td>' + \
+                (f'<td>{index}</td>' if self._show_index else '') + \
                 f'<td class="label">{relation.label}</td>' + \
                 f'<td>{annotation}</td>' + \
             '</tr>'
