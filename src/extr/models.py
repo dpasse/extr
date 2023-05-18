@@ -25,6 +25,9 @@ class Location:
     def contains(self: TLocation, other: TLocation) -> bool:
         return other.start >= self.start and other.actual_end <= self.actual_end
 
+    def extract(self, text: str) -> str:
+        return text[self.start:self.end]
+
     def __repr__(self) -> str:
         return f'({self.start}, {self.end})'
 
