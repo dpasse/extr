@@ -1,4 +1,4 @@
-from typing import Set, Dict, List, TypeVar
+from typing import Set, Dict, List, TypeVar, Generator
 
 from dataclasses import dataclass, field
 
@@ -130,3 +130,13 @@ class TokenGroup(ILocation):
     location: Location
     sentence: str
     tokens: List[Token]
+
+    def find_entities(self: ILocation, entities: List[Entity]) -> Generator[Entity, None, None]:
+        for entity in entities:
+            if self.contains(entity):
+                yield entity
+
+    def find_relations(self: ILocation, relations: List[Relation]) -> Generator[Relation, None, None]:
+        for relation in relations:
+            if self.contains(relation.e1) and self.contains(relation.e2):
+                yield relation
