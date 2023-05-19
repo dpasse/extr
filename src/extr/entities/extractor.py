@@ -1,30 +1,41 @@
-from typing import List, cast
+from abc import ABC, abstractmethod
+from typing import List
 
 from ..regexes import RegExLabel
-from ..utils import flatten
 from ..models import Location, Entity
 
 
-class EntityExtractor:
+class AbstractEntityExtractor(ABC):
+    @abstractmethod
+    def get_entities(self, text: str) -> List[Entity]:
+        pass
+
+class EntityExtractor(AbstractEntityExtractor):
     def __init__(self, regex_labels: List[RegExLabel]) -> None:
         self._regex_labels = regex_labels
 
     def get_entities(self, text: str) -> List[Entity]:
-        def handler(regex_label: RegExLabel):
-            return (
-                Entity(label, match.group(), Location(*match.span()))
-                for label, match in regex_label.findall(text)
-            )
+        entities: List[Entity] = []
+        for regex_label in self._regex_labels:
+            for label, match in regex_label.findall(text):
+                entities.append(
+                    Entity(
+                        len(entities) + 1,
+                        label,
+                        match.group(),
+                        Location(*match.span())
+                    )
+                )
+
+        if len(entities) == 0:
+            return []
 
         ## sort descending
         all_found_entities = sorted(
-            cast(List[Entity], flatten(map(handler, self._regex_labels))),
+            entities,
             key=lambda entity: (entity.end, -entity.start),
             reverse=True
         )
-
-        if len(all_found_entities) == 0:
-            return []
 
         entities = all_found_entities[:1]
         for curr_entity in all_found_entities[1:]:

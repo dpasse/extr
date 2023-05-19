@@ -1,25 +1,24 @@
 from typing import List
 import re
 
-from ..models import Entity, EntityAnnotationResults
+from ..models import Entity, EntityAnnotations
 
 
 class EntityAnnotator:
     def display_entity(self, entity: Entity) -> str:
         return str(entity)
 
-    def annotate(self, text: str, entities: List[Entity], offset = 0) -> EntityAnnotationResults:
+    def annotate(self, text: str, entities: List[Entity], offset = 0) -> EntityAnnotations:
         def insert_entity(text: str, entity: Entity) -> str:
             start = entity.start - offset
             end = entity.end - offset
             return text[:start] + self.display_entity(entity) + text[end:]
 
         annotated_text = text[:]
-        for identifer, entity in enumerate(entities):
-            entity.identifier = identifer + 1
+        for entity in entities:
             annotated_text = insert_entity(annotated_text, entity)
 
-        return EntityAnnotationResults(text, annotated_text, entities)
+        return EntityAnnotations(text, annotated_text, entities)
 
 class LabelOnlyEntityAnnotator(EntityAnnotator):
     def display_entity(self, entity: Entity) -> str:

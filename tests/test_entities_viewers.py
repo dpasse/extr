@@ -9,8 +9,8 @@ from extr.entities.viewers import HtmlViewer
 
 def test_html_viewer():
     entities = [
-        Entity('POSITION', 'Pitcher', Location(9, 16), 1),
-        Entity('PERSON', 'Ted', Location(0, 3), 2)
+        Entity(1, 'POSITION', 'Pitcher', Location(9, 16), 1),
+        Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
     ]
 
     viewer = HtmlViewer()
@@ -33,8 +33,8 @@ span.label { font-weight: bold; padding: 3px; color: black; }
 
 def test_html_viewer_with_custom_styles():
     entities = [
-        Entity('POSITION', 'Pitcher', Location(9, 16), 1),
-        Entity('PERSON', 'Ted', Location(0, 3), 2)
+        Entity(1, 'POSITION', 'Pitcher', Location(9, 16), 1),
+        Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
     ]
 
     viewer = HtmlViewer()

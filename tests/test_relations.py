@@ -3,17 +3,17 @@ import sys
 
 sys.path.insert(0, os.path.join('../src'))
 
-from extr import Location, Entity, EntityAnnotationResults
+from extr import Location, Entity, EntityAnnotations
 from extr.relations import RelationExtractor, RegExRelationLabelBuilder
 
 
 def test_get_relations():
-    annotations = EntityAnnotationResults(
+    annotations = EntityAnnotations(
         'Ted is a Pitcher.',
         '##ENTITY_PERSON_2## is a ##ENTITY_POSITION_1##.',
         [
-            Entity('POSITION', 'Pitcher', Location(9, 16), 1),
-            Entity('PERSON', 'Ted', Location(0, 3), 2)
+            Entity(1, 'POSITION', 'Pitcher', Location(9, 16), 1),
+            Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
         ]
     )
 

@@ -42,8 +42,8 @@ def test_get_entities_with_knowledge():
 
 def test_annotate():
     entities = [
-        Entity('POSITION', 'Pitcher', Location(9, 16), 1),
-        Entity('PERSON', 'Ted', Location(0, 3), 2)
+        Entity(1, 'POSITION', 'Pitcher', Location(9, 16), 1),
+        Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
     ]
 
     annotations = EntityAnnotator().annotate('Ted is a Pitcher.', entities)
@@ -53,8 +53,8 @@ def test_annotate():
 
 def test_html_annotate():
     entities = [
-        Entity('POSITION', 'Pitcher', Location(9, 16), 1),
-        Entity('PERSON', 'Ted', Location(0, 3), 2)
+        Entity(1, 'POSITION', 'Pitcher', Location(9, 16), 1),
+        Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
     ]
 
     annotations = HtmlEntityAnnotator().annotate('Ted is a Pitcher.', entities)

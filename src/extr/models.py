@@ -28,6 +28,9 @@ class Location:
     def extract(self, text: str) -> str:
         return text[self.start:self.end]
 
+    def __str__(self) -> str:
+        return f'({self.start}, {self.end})'
+
     def __repr__(self) -> str:
         return f'({self.start}, {self.end})'
 
@@ -46,10 +49,10 @@ class ILocation:
 
 @dataclass()
 class Entity(ILocation):
+    identifier: int
     label: str
     text: str
     location: Location
-    identifier: int = NOT_DEFINED_FLAG
     attributes: Dict[str, Set[str]] = field(default_factory=dict)
 
     @property
@@ -73,7 +76,7 @@ class Entity(ILocation):
         return f'##ENTITY_{self.label}_{self.identifier}##'
 
 @dataclass(frozen=True)
-class EntityAnnotationResults:
+class EntityAnnotations:
     original_text: str
     annotated_text: str
     entities: List[Entity]
