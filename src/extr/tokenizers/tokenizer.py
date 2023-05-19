@@ -1,4 +1,4 @@
-from typing import List, Generator, Union
+from typing import List
 from extr import Location
 from ..models import Token, TokenGroup
 
@@ -32,22 +32,3 @@ def word_tokenizer(text: str, tokens: List[str]) -> TokenGroup:
     )
 
     return token_group
-
-def tokenizer(text: str, sentences: Union[Generator[List[str], None, None], List[List[str]]]) -> Generator[TokenGroup, None, None]:
-    offset = 0
-
-    cache = text[:].strip()
-    for sentence in sentences:
-        token_group = word_tokenizer(cache, sentence)
-
-        yield TokenGroup(
-            Location(token_group.location.start + offset, token_group.location.end + offset),
-            token_group.sentence,
-            tokens=[
-                Token(tk.text, Location(offset + tk.location.start, offset + tk.location.end), tk.order)
-                for tk in token_group.tokens
-            ]
-        )
-
-        offset = token_group.location.end
-        cache = cache[offset:]

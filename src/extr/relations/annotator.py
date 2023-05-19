@@ -6,16 +6,16 @@ class RelationAnnotator:
     def display_entity(self, entity: Entity, position: int) -> str:
         return f'<e{str(position)}>{entity.text}</e{str(position)}>'
 
-    def annotate(self, text: str, relation: Relation, offset = 0) -> str:
+    def annotate(self, text: str, relation: Relation) -> str:
         annotated_text = text[:]
 
         e1 = relation.e1
-        e1_start = e1.location.start - offset
-        e1_end = e1.location.end - offset
+        e1_start = e1.location.start
+        e1_end = e1.location.end
 
         e2 = relation.e2
-        e2_start = e2.location.start - offset
-        e2_end = e2.location.end - offset
+        e2_start = e2.location.start
+        e2_end = e2.location.end
 
         if e1_end < e2_start:
             return annotated_text[:e1_start] + \
