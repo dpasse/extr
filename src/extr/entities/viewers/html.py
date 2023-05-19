@@ -33,7 +33,7 @@ span.label { font-weight: bold; padding: 3px; color: black; }
 
     def append(self, text: str, entities: List[Entity]) -> None:
         self._rows.append(
-            self._annotator.annotate(text, entities).annotated_text
+            self._annotator.annotate(text, entities)
         )
 
     def create_view(self, custom_styles: Optional[str] = None, spacer='<hr />') -> str:

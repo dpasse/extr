@@ -54,8 +54,8 @@ def test_end_to_end():
         player_to_base_relationship
     ]
 
-    annotations = EntityAnnotator().annotate(text, entities)
-    relations = RelationExtractor(relations_to_extract).extract(annotations)
+    annotated_text = EntityAnnotator().annotate(text, entities)
+    relations = RelationExtractor(relations_to_extract).extract(annotated_text, entities)
 
     print(relations)
     assert len(relations) == 2

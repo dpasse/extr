@@ -10,14 +10,11 @@ from extr.relations.viewers import HtmlViewer
 
 def test_html_viewer():
     text = 'Ted is a Pitcher.'
-    annotations = EntityAnnotations(
-        text,
-        '##ENTITY_PERSON_2## is a ##ENTITY_POSITION_1##.',
-        [
-            Entity(1, 'POSITION', 'Pitcher', Location(9, 16), 1),
-            Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
-        ]
-    )
+    annotated_text = '##ENTITY_PERSON_2## is a ##ENTITY_POSITION_1##.'
+    entities = [
+        Entity(1, 'POSITION', 'Pitcher', Location(9, 16), 1),
+        Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
+    ]
 
     ## define relationship between PERSON and POSITION    
     relationship = RegExRelationLabelBuilder('is_a') \
@@ -33,7 +30,7 @@ def test_html_viewer():
         
     relations_to_extract = [relationship]
 
-    relations = RelationExtractor(relations_to_extract).extract(annotations)
+    relations = RelationExtractor(relations_to_extract).extract(annotated_text, entities)
 
     viewer = HtmlViewer()
     viewer.append_header('r("PERSON", "POSITION")')

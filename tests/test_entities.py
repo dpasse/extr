@@ -46,10 +46,9 @@ def test_annotate():
         Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
     ]
 
-    annotations = EntityAnnotator().annotate('Ted is a Pitcher.', entities)
+    annotated_text = EntityAnnotator().annotate('Ted is a Pitcher.', entities)
 
-    assert annotations.original_text == 'Ted is a Pitcher.'
-    assert annotations.annotated_text == '##ENTITY_PERSON_2## is a ##ENTITY_POSITION_1##.'
+    assert annotated_text == '##ENTITY_PERSON_2## is a ##ENTITY_POSITION_1##.'
 
 def test_html_annotate():
     entities = [
@@ -57,7 +56,6 @@ def test_html_annotate():
         Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
     ]
 
-    annotations = HtmlEntityAnnotator().annotate('Ted is a Pitcher.', entities)
+    annotated_text = HtmlEntityAnnotator().annotate('Ted is a Pitcher.', entities)
 
-    assert annotations.original_text == 'Ted is a Pitcher.'
-    assert annotations.annotated_text == '<span class="entity lb-PERSON"><span class="label">PERSON</span>Ted</span> is a <span class="entity lb-POSITION"><span class="label">POSITION</span>Pitcher</span>.'
+    assert annotated_text == '<span class="entity lb-PERSON"><span class="label">PERSON</span>Ted</span> is a <span class="entity lb-POSITION"><span class="label">POSITION</span>Pitcher</span>.'

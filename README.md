@@ -109,8 +109,8 @@ relationship = RegExRelationLabelBuilder('is_a') \
 relations_to_extract = [relationship]
 
 ## `entities` see 'Entity Extraction' above
-annotation_results = EntityAnnotator().annotate(text, entities)
-relations = RelationExtractor(relations_to_extract).extract(annotation_results)
+annotated_text = EntityAnnotator().annotate(text, entities)
+relations = RelationExtractor(relations_to_extract).extract(annotated_text, entities)
 
 ## relations == [
 ##      <Relation e1="Ted" r="is_a" e2="Pitcher">

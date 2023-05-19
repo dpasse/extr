@@ -3,21 +3,21 @@ from typing import List, Generator, cast
 
 import re
 from ..regexes import RegExLabel
-from ..models import EntityAnnotations, Relation
+from ..models import Relation, Entity
 from ..utils import flatten
 
 
 class AbstractRelationExtractor(ABC):
     @abstractmethod
-    def extract(self, entity_annotations: EntityAnnotations) -> List[Relation]:
+    def extract(self, text: str, entities: List[Entity]) -> List[Relation]:
         pass
 
 class RelationExtractor(AbstractRelationExtractor):
     def __init__(self, relation_labels: List[RegExLabel]) -> None:
         self._relation_labels = relation_labels
 
-    def extract(self, entity_annotations: EntityAnnotations) -> List[Relation]:
-        entity_lookup = entity_annotations.entity_lookup
+    def extract(self, text: str, entities: List[Entity]) -> List[Relation]:
+        entity_lookup = { str(entity): entity for entity in entities }
 
         def create_relation(label, match: re.Match) -> Relation:
             group = match.groupdict()
@@ -33,7 +33,7 @@ class RelationExtractor(AbstractRelationExtractor):
         def handler(relationship_label: RegExLabel) -> Generator[Relation, None, None]:
             return (
                 create_relation(label, match)
-                for label, match in relationship_label.findall(entity_annotations.annotated_text)
+                for label, match in relationship_label.findall(text)
             )
 
         return cast(List[Relation], flatten(map(handler, self._relation_labels)))

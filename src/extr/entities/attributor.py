@@ -40,7 +40,7 @@ class EntityAttributor:
         self._settings = settings
 
     def set_attributes(self, text: str, entities: List[Entity]) -> List[Entity]:
-        annotated_text = EntityAnnotator().annotate(text, entities).annotated_text
+        annotated_text = EntityAnnotator().annotate(text, entities)
 
         mappings = Query(entities).todict(str)
         for setting in self._settings:

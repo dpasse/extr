@@ -8,14 +8,11 @@ from extr.relations import RelationExtractor, RegExRelationLabelBuilder
 
 
 def test_get_relations():
-    annotations = EntityAnnotations(
-        'Ted is a Pitcher.',
-        '##ENTITY_PERSON_2## is a ##ENTITY_POSITION_1##.',
-        [
-            Entity(1, 'POSITION', 'Pitcher', Location(9, 16), 1),
-            Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
-        ]
-    )
+    annotated_text = '##ENTITY_PERSON_2## is a ##ENTITY_POSITION_1##.'
+    entities = [
+        Entity(1, 'POSITION', 'Pitcher', Location(9, 16), 1),
+        Entity(2, 'PERSON', 'Ted', Location(0, 3), 2)
+    ]
 
     ## define relationship between PERSON and POSITION    
     relationship = RegExRelationLabelBuilder('is_a') \
@@ -31,7 +28,7 @@ def test_get_relations():
         
     relations_to_extract = [relationship]
 
-    relations = RelationExtractor(relations_to_extract).extract(annotations)
+    relations = RelationExtractor(relations_to_extract).extract(annotated_text, entities)
     
     assert len(relations) == 1
     assert relations[0].e1.text == 'Ted'

@@ -76,16 +76,6 @@ class Entity(ILocation):
         return f'##ENTITY_{self.label}_{self.identifier}##'
 
 @dataclass(frozen=True)
-class EntityAnnotations:
-    original_text: str
-    annotated_text: str
-    entities: List[Entity]
-
-    @property
-    def entity_lookup(self):
-        return { str(entity): entity for entity in self.entities }
-
-@dataclass(frozen=True)
 class Relation:
     label: str
     e1: Entity
