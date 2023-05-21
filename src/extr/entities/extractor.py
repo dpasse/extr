@@ -37,13 +37,14 @@ class EntityExtractor(AbstractEntityExtractor):
             reverse=True
         )
 
-        entities = all_found_entities[:1]
-        for curr_entity in all_found_entities[1:]:
-            prev_entity = entities[-1]
+        slim_entities = [
+            all_found_entities[0]
+        ]
 
-            if curr_entity.is_in(prev_entity):
+        for curr_entity in all_found_entities[1:]:
+            if curr_entity.is_in(slim_entities[-1]):
                 continue
 
-            entities.append(curr_entity)
+            slim_entities.append(curr_entity)
 
-        return entities
+        return slim_entities

@@ -69,11 +69,11 @@ class Entity(ILocation):
 
         self.attributes[label].add(attribute)
 
-    def __repr__(self) -> str:
-        return f'<Entity label="{self.label}" text="{self.text}" span={repr(self.location)}>'
-
     def __str__(self) -> str:
         return f'##ENTITY_{self.label}_{self.identifier}##'
+
+    def __repr__(self) -> str:
+        return f'<Entity label="{self.label}" text="{self.text}" span={repr(self.location)}>'
 
 @dataclass(frozen=True)
 class Relation:
