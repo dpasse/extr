@@ -1,4 +1,4 @@
-from typing import Set, Dict, List, TypeVar, Generator
+from typing import Set, Dict, List, TypeVar, Generator, cast
 
 from dataclasses import dataclass, field
 
@@ -69,6 +69,18 @@ class Entity(ILocation):
 
         self.attributes[label].add(attribute)
 
+    def get_attributes_by_label(self, label: str) -> Set[str]:
+        if not label in self.attributes:
+            return set()
+
+        return self.attributes[label]
+
+    def is_a(self, label: str, attribute: str) -> bool:
+        if label in self.attributes:
+            return attribute in self.get_attributes_by_label(label)
+
+        return False
+
     def __str__(self) -> str:
         return f'##ENTITY_{self.label}_{self.identifier}##'
 
@@ -106,8 +118,12 @@ class Token(ILocation):
     order: int
     entities: List[Entity] = field(default_factory=lambda: [])
 
-    def add_entity(self, entity: Entity):
+    def add_entity(self, entity: Entity) -> None:
         self.entities.append(entity)
+
+    def apply_attribute(self, label: str, attribute: str) -> None:
+        for entity in self.entities:
+            entity.add_attribute(label, attribute)
 
     def __len__(self) -> int:
         return len(self.entities)
@@ -133,3 +149,11 @@ class TokenGroup(ILocation):
         for relation in relations:
             if self.contains(relation.e1) and self.contains(relation.e2):
                 yield relation
+
+    def apply_entities(self, entities: List[Entity]) -> None:
+        for entity in self.find_entities(entities):
+            for token in self.tokens:
+                if not cast(ILocation, entity).is_in(token) and not cast(ILocation, entity).contains(token):
+                    continue
+
+                token.add_entity(entity)
