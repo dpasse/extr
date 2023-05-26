@@ -47,21 +47,8 @@ class ILocation:
     def contains(self: TILocation, other: TILocation) -> bool:
         return self.location.contains(other.location)
 
-@dataclass()
-class Entity(ILocation):
-    identifier: int
-    label: str
-    text: str
-    location: Location
-    attributes: Dict[str, Set[str]] = field(default_factory=dict)
-
-    @property
-    def start(self) -> int:
-        return self.location.start
-
-    @property
-    def end(self) -> int:
-        return self.location.end
+class IMeta():
+    attributes: Dict[str, Set[str]]
 
     def add_attribute(self, label: str, attribute: str) -> None:
         if not label in self.attributes:
@@ -80,6 +67,22 @@ class Entity(ILocation):
             return attribute in self.get_attributes_by_label(label)
 
         return False
+
+@dataclass()
+class Entity(ILocation, IMeta):
+    identifier: int
+    label: str
+    text: str
+    location: Location
+    attributes: Dict[str, Set[str]] = field(default_factory=dict)
+
+    @property
+    def start(self) -> int:
+        return self.location.start
+
+    @property
+    def end(self) -> int:
+        return self.location.end
 
     def __str__(self) -> str:
         return f'##ENTITY_{self.label}_{self.identifier}##'
