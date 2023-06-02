@@ -1,1 +1,1 @@
-from .pipes import EntityPipeline
+from .pipes import EntityPipeline, RelationPipeline
